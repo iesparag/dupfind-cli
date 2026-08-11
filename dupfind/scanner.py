@@ -25,6 +25,13 @@ def walk_directory(path: str) -> Iterator[str]:
                         # Recurse into subdirectory
                         yield from walk_directory(entry.path)
                     elif entry.is_file(follow_symlinks=False):
+                        # Try to check if we can access the file
+                        try:
+                            with open(entry.path, 'rb') as _:
+                                pass
+                        except (PermissionError, OSError) as e:
+                            print(f"[WARNING] File not readable: {entry.path}: {e}", file=sys.stderr)
+                            continue
                         yield entry.path
                 except PermissionError as e:
                     print(f"[WARNING] Cannot access entry: {entry.path}: {e}", file=sys.stderr)

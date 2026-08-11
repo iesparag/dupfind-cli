@@ -85,5 +85,12 @@ class TestWalkDirectory(unittest.TestCase):
         files = set(walk_directory(self.tempdir))
         self.assertFalse(any('link_to_file2' in f or 'link_to_subdir' in f for f in files))
 
+    def test_empty_directory_outputs_none(self):
+        # Create a new temp dir with no files
+        temp_empty = tempfile.mkdtemp()
+        files = list(walk_directory(temp_empty))
+        self.assertEqual(files, [])
+        shutil.rmtree(temp_empty)
+
 if __name__ == '__main__':
     unittest.main()
