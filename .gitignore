@@ -1,6 +1,14 @@
-node_modules/
-.env
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest
+.pytest_cache/
+
+# Packaging
+*.egg-info/
 dist/
-coverage/
-*.log
-.DS_Store
+build/
+.eggs/
